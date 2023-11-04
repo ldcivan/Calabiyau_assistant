@@ -169,7 +169,7 @@ def click_ctrl_delay():
 
 def detect_0():
     global reload, reload_time
-    icon_position = pyautogui.locateOnScreen('./00.png', confidence=0.90, grayscale=True,
+    icon_position = pyautogui.locateOnScreen('./00.png', confidence=0.90, grayscale=True,  # 右下弹量区域
                                              region=(screen_width-490, screen_height-180, screen_width, screen_height))
     if icon_position is not None:
         if not reload:
@@ -188,7 +188,7 @@ def detect_0():
 
 
 def detect_low():
-    icon_position = pyautogui.locateOnScreen('./0.png', confidence=0.90, grayscale=False,
+    icon_position = pyautogui.locateOnScreen('./0.png', confidence=0.90, grayscale=False,  # 右下弹量区域
                                              region=(screen_width-200, screen_height-200, screen_width, screen_height))
     if icon_position and not reload:
         beep(0.02, 2500)
@@ -198,7 +198,7 @@ def detect_low():
 
 
 def detect_enemy():
-    icon_position = pyautogui.locateOnScreen('./red.png', confidence=0.90, grayscale=False,
+    icon_position = pyautogui.locateOnScreen('./red.png', confidence=0.90, grayscale=False,    # 右上小地图区域
                                              region=(screen_width-650, 0, screen_width, 650))
     if icon_position and not reload:
         beep(0.05, 300)
@@ -222,9 +222,9 @@ keyboard.on_press(on_key_press)
 
 print('----说明|Instruction----')
 if is_chinese:
-    print("f12-退出/重启程序")
+    print("f9启动或暂停程序，f12-退出/重启程序")
 else:
-    print("f12 to exit/restart")
+    print("F9 to start or pause the script, f12 to exit/restart")
 
 # 循环执行程序
 while mainLoop:
