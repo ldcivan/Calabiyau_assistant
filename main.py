@@ -169,16 +169,18 @@ def click_ctrl_delay():
 
 def detect_0():
     global reload, reload_time
-    icon_position = pyautogui.locateOnScreen('./00.png', confidence=0.90, grayscale=True,  # 右下弹量区域
+    icon_position = pyautogui.locateOnScreen('./00.png', confidence=0.92, grayscale=True,  # 右下弹量区域
                                              region=(screen_width-490, screen_height-180, screen_width, screen_height))
-    if icon_position is not None:
+    b_icon_position = pyautogui.locateOnScreen('./b_00.png', confidence=0.92, grayscale=True,  # 右下弹量区域
+                                             region=(screen_width-490, screen_height-180, screen_width, screen_height))
+    if icon_position is not None or b_icon_position is not None:
         if not reload:
             print('弹匣空，开始换弹', reload)
             reload = True
             click_ctrl()
         else:
             print("弹匣空，换弹中", reload)
-    elif icon_position is None:
+    elif icon_position is None and b_icon_position is None:
         if(datetime.now()-reload_time).total_seconds() > 1:
             reload = False
             print('未探测到空弹匣', reload)
@@ -188,9 +190,9 @@ def detect_0():
 
 
 def detect_low():
-    icon_position = pyautogui.locateOnScreen('./0.png', confidence=0.90, grayscale=False,  # 右下弹量区域
+    icon_position = pyautogui.locateOnScreen('./weapon_red.png', confidence=0.85, grayscale=False,  # 右下弹量区域
                                              region=(screen_width-200, screen_height-200, screen_width, screen_height))
-    if icon_position and not reload:
+    if icon_position is not None and not reload:
         beep(0.02, 2500)
         beep(0.02, 2500)
     else:
@@ -212,13 +214,26 @@ keyboard.add_hotkey('f12', actively_exit)
 # 注册按键组合 f9 开关
 keyboard.add_hotkey('f9', detect_switcher)
 
+
 # 注册按键组合 r 主动换弹
-def on_key_press(event):
-    if event.name == 'r':
-        click_ctrl_delay()
+keyboard.add_hotkey('r', click_ctrl_delay)
+keyboard.add_hotkey('w+r', click_ctrl_delay)
+keyboard.add_hotkey('d+r', click_ctrl_delay)
+keyboard.add_hotkey('s+r', click_ctrl_delay)
+keyboard.add_hotkey('a+r', click_ctrl_delay)
+keyboard.add_hotkey('a+w+r', click_ctrl_delay)
+keyboard.add_hotkey('w+d+r', click_ctrl_delay)
+keyboard.add_hotkey('d+s+r', click_ctrl_delay)
+keyboard.add_hotkey('s+a+r', click_ctrl_delay)
+keyboard.add_hotkey('shift+w+r', click_ctrl_delay)
+keyboard.add_hotkey('shift+d+r', click_ctrl_delay)
+keyboard.add_hotkey('shift+s+r', click_ctrl_delay)
+keyboard.add_hotkey('shift+a+r', click_ctrl_delay)
+keyboard.add_hotkey('shift+a+w+r', click_ctrl_delay)
+keyboard.add_hotkey('shift+w+d+r', click_ctrl_delay)
+keyboard.add_hotkey('shift+d+s+r', click_ctrl_delay)
+keyboard.add_hotkey('shift+s+a+r', click_ctrl_delay)
 
-
-keyboard.on_press(on_key_press)
 
 print('----说明|Instruction----')
 if is_chinese:
